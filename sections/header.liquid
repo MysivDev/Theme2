@@ -1,0 +1,230 @@
+{% if section.settings.menu_types == "left_align" %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    {% if section.settings.store_name != blank %}
+        <a class="navbar-brand" href="/">{{ section.settings.store_name }}</a>
+    {% else %}
+        {% if section.settings.logo_size == "Big" %}
+            <a href="/">{{ section.settings.store_logo | image_url: width:"64px", height:"64px" | image_tag }}</a>
+        {% elsif section.settings.logo_size == "Medium" %}
+            <a href="/">{{ section.settings.store_logo | image_url: width:"32px", height:"32px" | image_tag }}</a>
+        {% elsif section.settings.logo_size == "Small" %}
+            <a href="/">{{ section.settings.store_logo | image_url: width:"16px", height:"16px" | image_tag }}</a>
+        {% endif %}
+    {% endif %}
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse navbar_custom_left" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        {% for link in linklists[section.settings.menu].links %}
+            {% if link.links == blank %}
+                <li class="nav-item">
+                    <a style="font-weight: 600;" class="nav-link active" aria-current="page" href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+            {% else %}
+            <li class="nav-item dropdown">
+                <button style="font-weight: 600;" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ link.title }}
+                </button>
+                <ul class="dropdown-menu">
+            {% for childlink in link.links %} 
+                    <li><a class="dropdown-item" href="{{ childlink.url }}">{{ childlink.title }}</a></li>         
+            {% endfor %}
+                </ul>
+            </li>
+            {% endif %}
+        {% endfor %}
+      </ul>
+      <ul class="navbar_mini">
+        <li>
+            <a href="{{ routes.cart_url }}">Cart</a>
+        </li>
+        <li>
+            <a href="{{ routes.account_register_url }}">Register</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{% elsif section.settings.menu_types == "center_align" %}
+    
+<nav class="navbar navbar-expand-lg bg-body-tertiary larger_navbar">
+    <div class="brand_center">
+    {% if section.settings.store_name != blank %}
+        <a class="navbar-brand" href="/">{{ section.settings.store_name }}</a>
+    {% else %}
+        {% if section.settings.logo_size == "Big" %}
+            <a href="/">{{ section.settings.store_logo | image_url: width:"64px", height:"64px" | image_tag }}</a>
+        {% elsif section.settings.logo_size == "Medium" %}
+            <a href="/">{{ section.settings.store_logo | image_url: width:"32px", height:"32px" | image_tag }}</a>
+        {% elsif section.settings.logo_size == "Small" %}
+            <a href="/">{{ section.settings.store_logo | image_url: width:"16px", height:"16px" | image_tag }}</a>
+        {% endif %}
+    {% endif %}
+    </div>
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse navbar_custom_center" id="navbarNavDropdown">
+        <ul class="navbar_mini left">
+            <li>
+                <a href="{{ routes.search_url }}">Search</a>
+            </li>
+        </ul>
+      <ul class="navbar-nav">
+        {% for link in linklists[section.settings.menu].links %}
+            {% if link.links == blank %}
+                <li class="nav-item">
+                    <a style="font-weight: 600;" class="nav-link active" aria-current="page" href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+            {% else %}
+            <li class="nav-item dropdown">
+                <button style="font-weight: 600;" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ link.title }}
+                </button>
+                <ul class="dropdown-menu">
+            {% for childlink in link.links %} 
+                    <li><a class="dropdown-item" href="{{ childlink.url }}">{{ childlink.title }}</a></li>         
+            {% endfor %}
+                </ul>
+            </li>
+            {% endif %}
+        {% endfor %}
+      </ul>
+      <ul class="navbar_mini">
+        <li>
+            <a href="{{ routes.cart_url }}">Cart</a>
+        </li>
+        <li>
+            <a href="{{ routes.account_register_url }}">Register</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endif %}
+
+{% if section.settings.scroller_visible == "true" %}
+    <div class="scrolling-text-container">
+    <div class="scrolling-text-inner" style="--marquee-speed: 20s; --direction:scroll-left" role="marquee">
+        <div class="scrolling-text">
+            <div class="scrolling-text-item">{{ section.settings.scroller_1 | upcase }}</div>
+            <div class="scrolling-text-item">{{ section.settings.scroller_2 | upcase }}</div>
+            <div class="scrolling-text-item">{{ section.settings.scroller_3 | upcase }}</div>
+            <div class="scrolling-text-item">{{ section.settings.scroller_1 | upcase }}</div>
+            <div class="scrolling-text-item">{{ section.settings.scroller_2 | upcase }}</div>
+            <div class="scrolling-text-item">{{ section.settings.scroller_3 | upcase }}</div>
+            <div class="scrolling-text-item">{{ section.settings.scroller_1 | upcase }}</div>
+            <div class="scrolling-text-item">{{ section.settings.scroller_2 | upcase }}</div>
+        </div>
+    </div>
+</div>
+{% endif section.settings.menu_types == "" %}
+
+
+{% schema %}
+{
+    "name": "Header",
+    "settings": [
+        {
+            "type": "select",
+            "id": "menu_types",
+            "options": [
+                {
+                    "value": "left_align",
+                    "label": "Navigation Left"
+                },
+                {
+                    "value": "center_align",
+                    "label": "Navigation Center"
+                }
+            ],
+            "label": "Menu Type",
+            "default": "left_align",
+            "info": "Selecting the menu type changes the alignment of the menu bar."
+        },
+        {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Menu",
+            "default": "main-menu",
+            "info": "This menu is used to display the menu bar links."
+        },
+        {
+            "type": "text",
+            "id": "store_name",
+            "label": "Store Name",
+            "default": "MyShop",
+            "info": "The text shows the main text in the navbar. (Is to be understood as store name)"
+        },
+        {
+            "type": "image_picker",
+            "id": "store_logo",
+            "label": "Store Logo",
+            "info": "The Logo shows the Brandlogo in the navbar. (The 'Store Name' needs to be set to blank)"
+        },
+        {
+            "type": "select",
+            "id": "logo_size",
+            "options": [
+                {
+                    "value": "Big",
+                    "label": "Big"
+                },
+                {
+                    "value": "Medium",
+                    "label": "Medium"
+                },
+                {
+                    "value": "Small",
+                    "label": "Small"
+                }
+            ],
+            "label": "Logo Size",
+            "default": "Big",
+            "info": "The text shows the main text in the navbar. (Is to be understood as store name)"
+        },
+        {
+            "type": "radio",
+            "id": "scroller_visible",
+            "options": [
+                {
+                    "value": "true",
+                    "label": "visible"
+                },
+                {
+                    "value": "false",
+                    "label": "invisible"
+                }
+            ],
+            "label": "Scrollbar Visible",
+            "default": "true",
+            "info": "Defines whether the scrollbar should be visible."
+        },
+        {
+            "type": "text",
+            "id": "scroller_1",
+            "label": "Scroller Info-1",
+            "default": "Over +1000 happy Customers",
+            "info": "Text appears in the Scrollbar."
+        },
+        {
+            "type": "text",
+            "id": "scroller_2",
+            "label": "Scroller Info-2",
+            "default": "New collection available",
+            "info": "The text appears in 2nd position in the scroll bar."
+        },
+        {
+            "type": "text",
+            "id": "scroller_3",
+            "label": "Scroller Info-3",
+            "default": "New Store Location",
+            "info": "The text appears in 3nd position in the scroll bar."
+        }
+        ]
+}
+{% endschema %}

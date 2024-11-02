@@ -1,12 +1,105 @@
-body {
-    background-color: rgb(251, 251, 232);
+ul a {
+    text-decoration: none;
 }
 
-.homepage {
-    text-align: center;
-    padding-top: 10em;
+.column {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
 }
 
-.logo {
+.brand_center {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.larger_navbar {
+    flex-direction: column !important;
+    height: 7.5rem !important;
+}
+
+@media (max-width:991px){
+    .larger_navbar img{
+        display: none;
+    }
+}
+
+.navbar_custom_center {
+    justify-content: space-between;
+}
+
+.navbar_custom_left {
+    justify-content: space-between;
+}
+
+.navbar_mini {
     width: 25%;
+    list-style: none;
+    display: flex;
+    justify-content: right;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.left {
+    justify-content: left;
+}
+
+.navbar_mini li {
+    padding-left: 2rem;
+    margin: auto 0;
+}
+
+.navbar_mini li a{
+    color: black;
+    font-weight: 600;
+}
+
+/* Container styles */
+.scrolling-text-container {
+    width: 100%;
+    background-color: black;
+    overflow: hidden;
+}
+
+/* Inner container styles */
+.scrolling-text-inner {
+    width: 100%;
+    display: flex;
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: lighter;
+    padding: 8px 0;
+    color: white;
+}
+
+/* Text styles */
+.scrolling-text {
+    display: flex;
+}
+
+.scrolling-text-item {
+    padding: 0 100px;
+}
+
+/* Apply the animation to the text items */
+.scrolling-text-inner>div {
+    animation: var(--direction) var(--marquee-speed) linear infinite;
+}
+
+/* Pause the animation when a user hovers over it */
+.scrolling-text-container:hover .scrolling-text-inner>div {
+    animation-play-state: paused;
+}
+
+/* Setting the Animation using Keyframes */
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0vw);
+    }
+
+    100% {
+        transform: translateX(-100vw);
+    }
 }
